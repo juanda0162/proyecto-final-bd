@@ -42,7 +42,7 @@ public class MetodoDePagoDaoImple extends MetodoDePagoDao {
     }
 
     @Override
-    public void update(MetodoDePago obj) throws Exception {
+    public MetodoDePago update(MetodoDePago obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -60,6 +60,7 @@ public class MetodoDePagoDaoImple extends MetodoDePagoDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar el metodo de pago en la base de datos");
         }
+        return null;
     }
 
     @Override

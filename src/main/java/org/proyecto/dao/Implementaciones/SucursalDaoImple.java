@@ -52,7 +52,7 @@ public class SucursalDaoImple extends SucursalDao {
     }
 
     @Override
-    public void update(Sucursal obj) throws Exception {
+    public Sucursal update(Sucursal obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -74,6 +74,7 @@ public class SucursalDaoImple extends SucursalDao {
             throw new Exception("Error al actualizar la sucursal en la base de datos");
         }
 
+        return null;
     }
 
     @Override

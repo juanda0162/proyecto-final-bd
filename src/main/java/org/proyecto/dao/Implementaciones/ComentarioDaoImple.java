@@ -50,7 +50,7 @@ public class ComentarioDaoImple extends ComentarioDao {
     }
 
     @Override
-    public void update(Comentario obj) throws Exception {
+    public Comentario update(Comentario obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -74,6 +74,7 @@ public class ComentarioDaoImple extends ComentarioDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar el comentario en la base de datos");
         }
+        return null;
     }
 
 

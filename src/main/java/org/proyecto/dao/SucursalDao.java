@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class SucursalDao {
     public abstract int insert(Sucursal obj) throws Exception;
-    public abstract void update(Sucursal obj) throws Exception;
+    public abstract Sucursal update(Sucursal obj) throws Exception;
     public abstract void delete(int id) throws Exception;
     public abstract Sucursal get(int id) throws Exception;
     public abstract ArrayList<Sucursal> getListPorCadenaHotelera(CadenaHotelera cadenaHotelera) throws Exception;

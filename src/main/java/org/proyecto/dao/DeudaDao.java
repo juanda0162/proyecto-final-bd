@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class DeudaDao {
     public abstract int insert(Deuda obj) throws Exception;
-    public abstract void update(Deuda obj) throws Exception;
+    public abstract Deuda update(Deuda obj) throws Exception;
     public abstract void delete(int id) throws Exception;
     public abstract Deuda get(int id) throws Exception;
     public abstract Deuda getListPorReserva(Reserva reserva) throws Exception;

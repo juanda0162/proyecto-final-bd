@@ -41,7 +41,7 @@ public class CadenaHoteleraDaoImple extends CadenaHoteleraDao {
     }
 
     @Override
-    public void update(CadenaHotelera obj) throws Exception {
+    public CadenaHotelera update(CadenaHotelera  obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -58,6 +58,7 @@ public class CadenaHoteleraDaoImple extends CadenaHoteleraDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar la cadena hotelera en la base de datos");
         }
+        return null;
     }
 
     @Override

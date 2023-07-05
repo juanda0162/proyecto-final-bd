@@ -1,4 +1,5 @@
 package org.proyecto.gui;
+
 import org.proyecto.dao.HuespedDao;
 import org.proyecto.dto.Huesped;
 
@@ -23,22 +24,17 @@ public class HuespedFormDialog extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
+
+        // Crear panel principal
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Crear componentes de la interfaz
         ciTextField = new JTextField(10);
         nombreTextField = new JTextField(10);
         telefonoTextField = new JTextField(10);
         guardarButton = new JButton("Guardar");
-
-        // Agregar componentes a la ventana
-        add(new JLabel("CI del Huésped:"));
-        add(ciTextField);
-        add(new JLabel("Nombre:"));
-        add(nombreTextField);
-        add(new JLabel("Teléfono:"));
-        add(telefonoTextField);
-        add(guardarButton);
 
         // Configurar el ActionListener para el botón "Guardar"
         guardarButton.addActionListener(new ActionListener() {
@@ -52,6 +48,40 @@ public class HuespedFormDialog extends JFrame {
             }
         });
 
+        // Configurar el diseño de la interfaz
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Agregar componentes al panel
+        panel.add(new JLabel("CI del Huésped:"), gbc);
+        gbc.gridx++;
+        panel.add(ciTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Nombre:"), gbc);
+        gbc.gridx++;
+        panel.add(nombreTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Teléfono:"), gbc);
+        gbc.gridx++;
+        panel.add(telefonoTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(guardarButton, gbc);
+
+        // Agregar panel al centro de la ventana
+        add(panel, BorderLayout.CENTER);
+
+        pack();
         setVisible(true);
     }
 

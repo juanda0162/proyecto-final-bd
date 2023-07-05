@@ -54,7 +54,7 @@ public class HabitacionDaoImple extends HabitacionDao {
 
 
     @Override
-    public void update(Habitacion obj) throws Exception {
+    public Habitacion update(Habitacion obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -81,6 +81,7 @@ public class HabitacionDaoImple extends HabitacionDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar la habitacion en la base de datos");
         }
+        return null;
     }
 
     @Override

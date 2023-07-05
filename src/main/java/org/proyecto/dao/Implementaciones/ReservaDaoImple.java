@@ -62,7 +62,7 @@ public class ReservaDaoImple extends ReservaDao {
     }
 
     @Override
-    public void update(Reserva obj) throws Exception {
+    public Reserva update(Reserva obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -98,6 +98,7 @@ public class ReservaDaoImple extends ReservaDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar la reserva en la base de datos");
         }
+        return null;
     }
 
     @Override

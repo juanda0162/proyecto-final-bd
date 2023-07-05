@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class ComentarioDao {
     public abstract int insert(Comentario obj) throws Exception;
-    public abstract void update(Comentario obj) throws Exception;
+    public abstract Comentario update(Comentario obj) throws Exception;
 
 
     public abstract void delete(int id) throws Exception;

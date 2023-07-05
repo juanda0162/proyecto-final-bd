@@ -52,7 +52,7 @@ public class DeudaDaoImple extends DeudaDao {
     }
 
     @Override
-    public void update(Deuda obj) throws Exception {
+    public Deuda update(Deuda obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -82,6 +82,7 @@ public class DeudaDaoImple extends DeudaDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar la deuda en la base de datos");
         }
+        return null;
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.proyecto.dao.Implementaciones;
 
 import org.proyecto.Conexion;
 import org.proyecto.dao.TipoDao;
-import org.proyecto.dto.Habitacion;
 import org.proyecto.dto.Tipo;
 
 import java.sql.*;
@@ -48,7 +47,7 @@ public class TipoDaoImple extends TipoDao {
     }
 
     @Override
-    public void update(Tipo obj) throws Exception {
+    public Tipo update(Tipo obj) throws Exception {
         try {
             Conexion objConexion = Conexion.getOrCreate();
             Connection conn = objConexion.conectarMySQL();
@@ -71,6 +70,7 @@ public class TipoDaoImple extends TipoDao {
             e.printStackTrace();
             throw new Exception("Error al actualizar el tipo en la base de datos");
         }
+        return null;
     }
 
     @Override
