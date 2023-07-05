@@ -4,8 +4,7 @@ public class CadenaHotelera {
     private int idCadenaHotelera;
     private String nombre;
 
-    public CadenaHotelera(int idCadenaHotelera, String nombre) {
-        this.idCadenaHotelera = idCadenaHotelera;
+    public CadenaHotelera(String nombre) {
         this.nombre = nombre;
     }
 

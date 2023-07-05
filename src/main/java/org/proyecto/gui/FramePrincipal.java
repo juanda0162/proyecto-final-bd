@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.SortedMap;
 
 public class FramePrincipal extends JFrame {
     private DefaultListModel<String> listModel;
@@ -109,6 +108,7 @@ public class FramePrincipal extends JFrame {
             }
         });
 
+
         //ActionListenerBotones
         ingresarButton.addActionListener(new ActionListener() {
             @Override
@@ -197,10 +197,10 @@ public class FramePrincipal extends JFrame {
         String entidadSeleccionada = (String) tablaComboBox.getSelectedItem();
         switch (entidadSeleccionada) {
             case "CADENA_HOTELERA":
-                // Implementar lógica para insertar una nueva cadena hotelera
-//                CadenaHoteleraFormDialog cadenaHoteleraFormDialog = new CadenaHoteleraFormDialog(this, cadenaHoteleraDao, null);
-//                cadenaHoteleraFormDialog.setVisible(true);
-//                cargarTabla("CADENA_HOTELERA");
+//                 Implementar lógica para insertar una nueva cadena hotelera
+                CadenaHoteleraFormDialog cadenaHoteleraFormDialog = new CadenaHoteleraFormDialog(cadenaHoteleraDao);
+                cadenaHoteleraFormDialog.setVisible(true);
+                cargarTabla("CADENA_HOTELERA");
                 break;
             case "HUESPED":
                 // Implementar lógica para insertar un nuevo huésped
@@ -258,137 +258,137 @@ public class FramePrincipal extends JFrame {
                 break;
         }
     }
-    private void actualizarRegistro() throws Exception {
-        String entidadSeleccionada = (String) tablaComboBox.getSelectedItem();
-        switch (entidadSeleccionada) {
-            case "CADENA_HOTELERA":
-                // Implementar lógica para actualizar una cadena hotelera
-                int indexCadenaHotelera = listTabla.getSelectedIndex();
-                if (indexCadenaHotelera != -1) {
-                    String cadenaHoteleraItem = listModel.get(indexCadenaHotelera);
-                    int idCadenaHotelera = getIdFromItem(cadenaHoteleraItem);
-                    CadenaHotelera cadenaHotelera = cadenaHoteleraDao.update(idCadenaHotelera);
-                    CadenaHoteleraFormDialog cadenaHoteleraFormDialog = new CadenaHoteleraFormDialog(this, cadenaHoteleraDao, cadenaHotelera);
-                    cadenaHoteleraFormDialog.setVisible(true);
-                    cargarTabla("CADENA_HOTELERA");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione una cadena hotelera para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "SERVICIO_ADICIONAL":
-                // Implementar lógica para actualizar un servicio adicional
-                int indexServicioAdicional = listTabla.getSelectedIndex();
-                if (indexServicioAdicional != -1) {
-                    String servicioAdicionalItem = listModel.get(indexServicioAdicional);
-                    int idServicioAdicional = getIdFromItem(servicioAdicionalItem);
-                    ServicioAdicional servicioAdicional = servicioAdicionalHasHabitacionDao.update(idServicioAdicional);
-                    ServicioAdicionalFormDialog servicioAdicionalFormDialog = new ServicioAdicionalFormDialog(this, servicioAdicionalDao, servicioAdicional);
-                    servicioAdicionalFormDialog.setVisible(true);
-                    cargarTabla("SERVICIO_ADICIONAL");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione un servicio adicional para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "COMENTARIOS":
-                // Implementar lógica para actualizar un comentario
-                int indexComentario = listTabla.getSelectedIndex();
-                if (indexComentario != -1) {
-                    String comentarioItem = listModel.get(indexComentario);
-                    int idComentario = getIdFromItem(comentarioItem);
-                    Comentario comentario = comentarioDao.update(idComentario);
-                    ComentarioFormDialog comentarioFormDialog = new ComentarioFormDialog(this, comentarioDao, comentario);
-                    comentarioFormDialog.setVisible(true);
-                    cargarTabla("COMENTARIOS");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione un comentario para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "DEUDA":
-                // Implementar lógica para actualizar una deuda
-                int indexDeuda = listTabla.getSelectedIndex();
-                if (indexDeuda != -1) {
-                    String deudaItem = listModel.get(indexDeuda);
-                    int idDeuda = getIdFromItem(deudaItem);
-                    Deuda deuda = deudaDao.update(idDeuda);
-                    DeudaFormDialog deudaFormDialog = new DeudaFormDialog(this, deudaDao, deuda);
-                    deudaFormDialog.setVisible(true);
-                    cargarTabla("DEUDA");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione una deuda para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "HABITACION":
-                // Implementar lógica para actualizar una habitación
-                int indexHabitacion = listTabla.getSelectedIndex();
-                if (indexHabitacion != -1) {
-                    String habitacionItem = listModel.get(indexHabitacion);
-                    int idHabitacion = getIdFromItem(habitacionItem);
-                    Habitacion habitacion = habitacionDao.update(idHabitacion);
-                    HabitacionFormDialog habitacionFormDialog = new HabitacionFormDialog(this, habitacionDao, habitacion);
-                    habitacionFormDialog.setVisible(true);
-                    cargarTabla("HABITACION");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione una habitación para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "METODO_DE_PAGO":
-                // Implementar lógica para actualizar un método de pago
-                int indexMetodoPago = listTabla.getSelectedIndex();
-                if (indexMetodoPago != -1) {
-                    String metodoPagoItem = listModel.get(indexMetodoPago);
-                    int idMetodoPago = getIdFromItem(metodoPagoItem);
-                    MetodoDePago metodoDePago = metodoDePagoDao.update(idMetodoPago);
-                    MetodoPagoFormDialog metodoPagoFormDialog = new MetodoPagoFormDialog(this, metodoPagoDao, metodoPago);
-                    metodoPagoFormDialog.setVisible(true);
-                    cargarTabla("METODO_DE_PAGO");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione un método de pago para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "RESERVA":
-                // Implementar lógica para actualizar una reserva
-                int indexReserva = listTabla.getSelectedIndex();
-                if (indexReserva != -1) {
-                    String reservaItem = listModel.get(indexReserva);
-                    int idReserva = getIdFromItem(reservaItem);
-                    Reserva reserva = reservaDao.update(idReserva);
-                    ReservaFormDialog reservaFormDialog = new ReservaFormDialog(this, reservaDao, reserva);
-                    reservaFormDialog.setVisible(true);
-                    cargarTabla("RESERVA");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione una reserva para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "SUCURSAL":
-                // Implementar lógica para actualizar una sucursal
-                int indexSucursal = listTabla.getSelectedIndex();
-                if (indexSucursal != -1) {
-                    String sucursalItem = listModel.get(indexSucursal);
-                    int idSucursal = getIdFromItem(sucursalItem);
-                    Sucursal sucursal = sucursalDao.update(idSucursal);
-                    SucursalFormDialog sucursalFormDialog = new SucursalFormDialog(this, sucursalDao, sucursal);
-                    sucursalFormDialog.setVisible(true);
-                    cargarTabla("SUCURSAL");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione una sucursal para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "TIPO":
-                // Implementar lógica para actualizar un tipo
-                int indexTipo = listTabla.getSelectedIndex();
-                if (indexTipo != -1) {
-                    String tipoItem = listModel.get(indexTipo);
-                    int idTipo = getIdFromItem(tipoItem);
-                    Tipo tipo = tipoDao.update(idTipo);
-                    TipoFormDialog tipoFormDialog = new TipoFormDialog(this, tipoDao, tipo);
-                    tipoFormDialog.setVisible(true);
-                    cargarTabla("TIPO");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Seleccione un tipo para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-        }
-    }
+//    private void actualizarRegistro() throws Exception {
+//        String entidadSeleccionada = (String) tablaComboBox.getSelectedItem();
+//        switch (entidadSeleccionada) {
+//            case "CADENA_HOTELERA":
+//                // Implementar lógica para actualizar una cadena hotelera
+//                int indexCadenaHotelera = listTabla.getSelectedIndex();
+//                if (indexCadenaHotelera != -1) {
+//                    String cadenaHoteleraItem = listModel.get(indexCadenaHotelera);
+//                    int idCadenaHotelera = getIdFromItem(cadenaHoteleraItem);
+//                    CadenaHotelera cadenaHotelera = cadenaHoteleraDao.update(idCadenaHotelera);
+//                    CadenaHoteleraFormDialog cadenaHoteleraFormDialog = new CadenaHoteleraFormDialog(this, cadenaHoteleraDao, cadenaHotelera);
+//                    cadenaHoteleraFormDialog.setVisible(true);
+//                    cargarTabla("CADENA_HOTELERA");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione una cadena hotelera para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "SERVICIO_ADICIONAL":
+//                // Implementar lógica para actualizar un servicio adicional
+//                int indexServicioAdicional = listTabla.getSelectedIndex();
+//                if (indexServicioAdicional != -1) {
+//                    String servicioAdicionalItem = listModel.get(indexServicioAdicional);
+//                    int idServicioAdicional = getIdFromItem(servicioAdicionalItem);
+//                    ServicioAdicional servicioAdicional = servicioAdicionalHasHabitacionDao.update(idServicioAdicional);
+//                    ServicioAdicionalFormDialog servicioAdicionalFormDialog = new ServicioAdicionalFormDialog(this, servicioAdicionalDao, servicioAdicional);
+//                    servicioAdicionalFormDialog.setVisible(true);
+//                    cargarTabla("SERVICIO_ADICIONAL");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione un servicio adicional para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "COMENTARIOS":
+//                // Implementar lógica para actualizar un comentario
+//                int indexComentario = listTabla.getSelectedIndex();
+//                if (indexComentario != -1) {
+//                    String comentarioItem = listModel.get(indexComentario);
+//                    int idComentario = getIdFromItem(comentarioItem);
+//                    Comentario comentario = comentarioDao.update(idComentario);
+//                    ComentarioFormDialog comentarioFormDialog = new ComentarioFormDialog(this, comentarioDao, comentario);
+//                    comentarioFormDialog.setVisible(true);
+//                    cargarTabla("COMENTARIOS");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione un comentario para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "DEUDA":
+//                // Implementar lógica para actualizar una deuda
+//                int indexDeuda = listTabla.getSelectedIndex();
+//                if (indexDeuda != -1) {
+//                    String deudaItem = listModel.get(indexDeuda);
+//                    int idDeuda = getIdFromItem(deudaItem);
+//                    Deuda deuda = deudaDao.update(idDeuda);
+//                    DeudaFormDialog deudaFormDialog = new DeudaFormDialog(this, deudaDao, deuda);
+//                    deudaFormDialog.setVisible(true);
+//                    cargarTabla("DEUDA");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione una deuda para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "HABITACION":
+//                // Implementar lógica para actualizar una habitación
+//                int indexHabitacion = listTabla.getSelectedIndex();
+//                if (indexHabitacion != -1) {
+//                    String habitacionItem = listModel.get(indexHabitacion);
+//                    int idHabitacion = getIdFromItem(habitacionItem);
+//                    Habitacion habitacion = habitacionDao.update(idHabitacion);
+//                    HabitacionFormDialog habitacionFormDialog = new HabitacionFormDialog(this, habitacionDao, habitacion);
+//                    habitacionFormDialog.setVisible(true);
+//                    cargarTabla("HABITACION");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione una habitación para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "METODO_DE_PAGO":
+//                // Implementar lógica para actualizar un método de pago
+//                int indexMetodoPago = listTabla.getSelectedIndex();
+//                if (indexMetodoPago != -1) {
+//                    String metodoPagoItem = listModel.get(indexMetodoPago);
+//                    int idMetodoPago = getIdFromItem(metodoPagoItem);
+//                    MetodoDePago metodoDePago = metodoDePagoDao.update(idMetodoPago);
+//                    MetodoPagoFormDialog metodoPagoFormDialog = new MetodoPagoFormDialog(this, metodoPagoDao, metodoPago);
+//                    metodoPagoFormDialog.setVisible(true);
+//                    cargarTabla("METODO_DE_PAGO");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione un método de pago para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "RESERVA":
+//                // Implementar lógica para actualizar una reserva
+//                int indexReserva = listTabla.getSelectedIndex();
+//                if (indexReserva != -1) {
+//                    String reservaItem = listModel.get(indexReserva);
+//                    int idReserva = getIdFromItem(reservaItem);
+//                    Reserva reserva = reservaDao.update(idReserva);
+//                    ReservaFormDialog reservaFormDialog = new ReservaFormDialog(this, reservaDao, reserva);
+//                    reservaFormDialog.setVisible(true);
+//                    cargarTabla("RESERVA");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione una reserva para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "SUCURSAL":
+//                // Implementar lógica para actualizar una sucursal
+//                int indexSucursal = listTabla.getSelectedIndex();
+//                if (indexSucursal != -1) {
+//                    String sucursalItem = listModel.get(indexSucursal);
+//                    int idSucursal = getIdFromItem(sucursalItem);
+//                    Sucursal sucursal = sucursalDao.update(idSucursal);
+//                    SucursalFormDialog sucursalFormDialog = new SucursalFormDialog(this, sucursalDao, sucursal);
+//                    sucursalFormDialog.setVisible(true);
+//                    cargarTabla("SUCURSAL");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione una sucursal para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//            case "TIPO":
+//                // Implementar lógica para actualizar un tipo
+//                int indexTipo = listTabla.getSelectedIndex();
+//                if (indexTipo != -1) {
+//                    String tipoItem = listModel.get(indexTipo);
+//                    int idTipo = getIdFromItem(tipoItem);
+//                    Tipo tipo = tipoDao.update(idTipo);
+//                    TipoFormDialog tipoFormDialog = new TipoFormDialog(this, tipoDao, tipo);
+//                    tipoFormDialog.setVisible(true);
+//                    cargarTabla("TIPO");
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Seleccione un tipo para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//                break;
+//        }
+//    }
 
 
     private int getIdFromItem(String item) {
