@@ -1,6 +1,6 @@
 package org.proyecto.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Checkin {
     private int idChekin;
