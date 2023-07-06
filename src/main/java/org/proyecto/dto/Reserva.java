@@ -13,7 +13,7 @@ public class Reserva {
     private int idHuesped;
     private int idMetodoDePago;
 
-    public Reserva(int idReserva, String estado, Date fechaEntrada, Date fechaSalida, String peticion, int cantidadPersonas, int huespedCi, int idMetodoDePago) {
+    public Reserva(String estado, Date fechaEntrada, Date fechaSalida, String peticion, int cantidadPersonas, int huespedCi, int idMetodoDePago) {
         this.idReserva = idReserva;
         this.estado = estado;
         this.fechaEntrada = fechaEntrada;

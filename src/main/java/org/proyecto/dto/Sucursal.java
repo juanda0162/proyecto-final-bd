@@ -8,7 +8,7 @@ public class Sucursal {
     private int telefono;
     private int idCadenaHotelera;
 
-    public Sucursal(int idSucursal, String nombre, String direccion, String clasificacion, int telefono, int idCadenaHotelera) {
+    public Sucursal(String nombre, String direccion, String clasificacion, int telefono, int idCadenaHotelera) {
         this.idSucursal = idSucursal;
         this.nombre = nombre;
         this.direccion = direccion;

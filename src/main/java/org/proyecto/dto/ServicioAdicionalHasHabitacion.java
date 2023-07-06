@@ -5,8 +5,7 @@ public class ServicioAdicionalHasHabitacion {
     private int idHabitacion;
     private int idServicioAdicional_has_Habitacion;
 
-    public ServicioAdicionalHasHabitacion(int idServicioAdicional, int idHabitaciones, int idServicioAdicional_has_Habitaciones) {
-        this.idServicioAdicional = idServicioAdicional;
+    public ServicioAdicionalHasHabitacion(int idHabitaciones, int idServicioAdicional_has_Habitaciones) {
         this.idHabitacion = idHabitaciones;
         this.idServicioAdicional_has_Habitacion = idServicioAdicional_has_Habitaciones;
     }

@@ -10,14 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CadenaHoteleraFormDialog extends JFrame {
+    private CadenaHotelera cadenaHotelera;
+    private CadenaHoteleraDao cadenaHoteleraDao;
     private JTextField idTextField;
     private JTextField nombreTextField;
     private JButton guardarButton;
 
-    private CadenaHoteleraDao cadenaHoteleraDao;
 
-    public CadenaHoteleraFormDialog(CadenaHoteleraDao cadenaHoteleraDao) {
+    public CadenaHoteleraFormDialog(JFrame parent, CadenaHoteleraDao cadenaHoteleraDao, CadenaHotelera cadenaHotelera) {
+        super();
         this.cadenaHoteleraDao = cadenaHoteleraDao;
+        this.cadenaHotelera = cadenaHotelera;
 
         // Configurar la ventana emergente
         setTitle("Actualización de Cadena Hotelera");
@@ -72,20 +75,33 @@ public class CadenaHoteleraFormDialog extends JFrame {
 
         pack();
         setVisible(true);
+
+        if (cadenaHotelera != null) {
+            nombreTextField.setText(cadenaHotelera.getNombre());
+        }
+
     }
+
 
     private void guardarCadenaHotelera() throws Exception {
         // Obtener los datos ingresados por el usuario
         String nombre = nombreTextField.getText();
 
         // Crear un objeto CadenaHotelera con los datos ingresados
-        CadenaHotelera cadenaHotelera = new CadenaHotelera(nombre);
+        CadenaHotelera NuevaCadenaHotelera = new CadenaHotelera(nombre);
 
         // Actualizar la cadena hotelera en la base de datos
-        cadenaHoteleraDao.insert(cadenaHotelera);
+        if (cadenaHotelera != null) {
+            // Actualizar el paciente existente
+            NuevaCadenaHotelera.setIdCadenaHotelera(cadenaHotelera.getIdCadenaHotelera());
+            cadenaHoteleraDao.update(NuevaCadenaHotelera);
+        } else {
+            // Insertar un nuevo paciente
+            cadenaHoteleraDao.insert(NuevaCadenaHotelera);
+            JOptionPane.showMessageDialog(this, "Cadena hotelera actualizada exitosamente");
 
-        // Mostrar un mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Cadena hotelera actualizada exitosamente");
+        }
+
 
         // Cerrar la ventana de actualización de cadena hotelera
         dispose();

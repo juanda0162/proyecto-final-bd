@@ -6,7 +6,7 @@ public class Tipo {
     private String comodidades;
     private float precio;
 
-    public Tipo(int idTipo, String nombre, String comodidades,float precio) {
+    public Tipo(String nombre, String comodidades,float precio) {
         this.idTipo = idTipo;
         this.nombre = nombre;
         this.comodidades = comodidades;

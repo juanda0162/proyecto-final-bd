@@ -9,7 +9,7 @@ public class Comentario {
     private Date fecha;
     private int idChekin;
 
-    public Comentario(int idComentario, String descripcion, String calificacion, Date fecha, int idChekin) {
+    public Comentario(String descripcion, String calificacion, Date fecha, int idChekin) {
         this.idComentario = idComentario;
         this.descripcion = descripcion;
         this.calificacion = calificacion;

@@ -15,8 +15,11 @@ public class HuespedFormDialog extends JFrame {
     private JButton guardarButton;
 
     private HuespedDao huespedDao;
+    private Huesped huesped;
 
-    public HuespedFormDialog(HuespedDao huespedDao) {
+    public HuespedFormDialog(JFrame parent, HuespedDao huespedDao, Huesped huesped) {
+        super();
+        this.huespedDao = huespedDao;
         this.huespedDao = huespedDao;
 
         // Configurar la ventana emergente
@@ -85,6 +88,8 @@ public class HuespedFormDialog extends JFrame {
         setVisible(true);
     }
 
+
+
     private void guardarHuesped() throws Exception {
         // Obtener los datos ingresados por el usuario
         int ci = Integer.parseInt(ciTextField.getText());
@@ -92,13 +97,19 @@ public class HuespedFormDialog extends JFrame {
         int telefono = Integer.parseInt(telefonoTextField.getText());
 
         // Crear un objeto Huesped con los datos ingresados
-        Huesped huesped = new Huesped(ci, nombre, telefono);
+        Huesped NuevoHuesped = new Huesped(ci, nombre, telefono);
 
         // Guardar el huesped en la base de datos
-        huespedDao.insert(huesped);
+        if (huesped != null) {
+            // Actualizar el paciente existente
+            NuevoHuesped.setIdHuesped(huesped.getIdHuesped());
+            huespedDao.update(NuevoHuesped);
+        } else {
+            // Insertar un nuevo paciente
+            huespedDao.insert(NuevoHuesped);
+            JOptionPane.showMessageDialog(this, "Huesped actualizado exitosamente");
 
-        // Mostrar un mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Huésped guardado exitosamente");
+        }
 
         // Cerrar la ventana de consulta de huésped
         dispose();

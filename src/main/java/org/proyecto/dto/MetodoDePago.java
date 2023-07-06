@@ -5,7 +5,7 @@ public class MetodoDePago {
     private String tipo;
     private String descripcion;
 
-    public MetodoDePago(int idMetodoDePago, String tipo, String descripcion) {
+    public MetodoDePago(String tipo, String descripcion) {
         this.idMetodoDePago = idMetodoDePago;
         this.tipo = tipo;
         this.descripcion = descripcion;

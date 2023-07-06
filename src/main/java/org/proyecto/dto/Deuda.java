@@ -5,7 +5,7 @@ public class Deuda {
     private float montoTotal;
     private int idReserva;
 
-    public Deuda(int idDeuda, float montoTotal, int idReserva) {
+    public Deuda(float montoTotal, int idReserva) {
         this.idDeuda = idDeuda;
         this.montoTotal = montoTotal;
         this.idReserva = idReserva;

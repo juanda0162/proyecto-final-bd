@@ -6,7 +6,7 @@ public class Habitacion {
     private int idSucursal;
     private int idTipo;
 
-    public Habitacion(int idHabitacion, String estado, int idSucursal, int idTipo) {
+    public Habitacion(String estado, int idSucursal, int idTipo) {
         this.idHabitacion = idHabitacion;
         this.estado = estado;
         this.idSucursal = idSucursal;
