@@ -21,7 +21,7 @@ public class FramePrincipal extends JFrame {
 
     //instancias DAO
     private CadenaHoteleraDao cadenaHoteleraDao;
-//    private CheckinDao checkinDao;
+    private CheckinDao checkinDao;
     private ComentarioDao comentarioDao;
     private DeudaDao deudaDao;
     private HabitacionDao habitacionDao;
@@ -29,7 +29,7 @@ public class FramePrincipal extends JFrame {
     private MetodoDePagoDao metodoDePagoDao;
     private ReservaDao reservaDao;
     private ReservaHasHabitacionDao reservaHasHabitacionDao;
-//    private ServicioAdicionalDao servicioAdicionalDao;
+    private ServicioAdicionalDao servicioAdicionalDao;
     private ServicioAdicionalHasHabitacionDao servicioAdicionalHasHabitacionDao;
     private SucursalDao sucursalDao;
     private TipoDao tipoDao;
@@ -41,7 +41,7 @@ public class FramePrincipal extends JFrame {
         //Inicializar DAO
 
         cadenaHoteleraDao = new CadenaHoteleraDaoImple();
-//        checkinDao = new CheckinDaoImpl();
+        checkinDao = new CheckinDaoImple();
         comentarioDao = new ComentarioDaoImple();
         deudaDao = new DeudaDaoImple();
         habitacionDao = new HabitacionDaoImple();
@@ -49,7 +49,7 @@ public class FramePrincipal extends JFrame {
         metodoDePagoDao = new MetodoDePagoDaoImple();
         reservaDao = new ReservaDaoImple();
         reservaHasHabitacionDao = new ReservaHasHabitacionDaoImple();
-//        servicioAdicionalDao = new ServicioAdicionalDaoImpl();
+        servicioAdicionalDao = new ServicioAdicionalDaoImple();
         servicioAdicionalHasHabitacionDao = new ServicioAdicionalHasHabitacionDaoImple();
         sucursalDao = new SucursalDaoImple();
         tipoDao = new TipoDaoImple();
@@ -72,6 +72,7 @@ public class FramePrincipal extends JFrame {
         // Configurar el JComboBox
         tablaComboBox = new JComboBox<>();
         tablaComboBox.addItem("CADENA_HOTELERA");
+        tablaComboBox.addItem("CHECKIN");
         tablaComboBox.addItem("COMENTARIOS");
         tablaComboBox.addItem("DEUDA");
         tablaComboBox.addItem("HABITACION");
@@ -163,7 +164,10 @@ public class FramePrincipal extends JFrame {
                 }
                 break;
             case "CHECKIN":
-                // Agrega aquí el código para cargar la tabla CHECKIN
+                ArrayList<Checkin> checkins = checkinDao.getList();
+                for (Checkin checkin : checkins) {
+                    listModel.addElement(checkin.getIdChekin() + ". Registro Llegada: " + checkin.getRegistroLlegada() + " - Registro Salida: " + checkin.getRegistroSalida() + " - ID Reservas: " + checkin.getIdReservas());
+                }
                 break;
             case "COMENTARIO":
                 ArrayList<Comentario> comentarios = comentarioDao.getList();
@@ -218,7 +222,10 @@ public class FramePrincipal extends JFrame {
                 break;
 
             case "SERVICIO_ADICIONAL":
-                // Agrega aquí el código para cargar la tabla SERVICIO_ADICIONAL
+                ArrayList<ServicioAdicional> serviciosAdicionales = servicioAdicionalDao.getList();
+                for (ServicioAdicional servicioAdicional : serviciosAdicionales) {
+                    listModel.addElement(servicioAdicional.getNombre() + " - Precio: " + servicioAdicional.getPrecio());
+                }
                 break;
             case "SERVICIO_ADICIONAL_HAS_HABITACION":
                 ArrayList<ServicioAdicionalHasHabitacion> servicioAdicionalHasHabitaciones = servicioAdicionalHasHabitacionDao.getList();
@@ -252,11 +259,29 @@ public class FramePrincipal extends JFrame {
                 cadenaHoteleraFormDialog.setVisible(true);
                 cargarTabla("CADENA_HOTELERA");
                 break;
+            case "CHECKIN":
+                // Implementar lógica para insertar un nuevo check-in
+                CheckinFormDialog checkinFormDialog = new CheckinFormDialog(this, checkinDao, null);
+                checkinFormDialog.setVisible(true);
+                cargarTabla("CHECKIN");
+                break;
+            case "COMENTARIO":
+                // Implementar lógica para insertar un nuevo comentario
+                ComentarioFormDialog comentarioFormDialog = new ComentarioFormDialog(this, comentarioDao, null);
+                comentarioFormDialog.setVisible(true);
+                cargarTabla("COMENTARIO");
+                break;
             case "DEUDA":
                 // Implementar lógica para insertar una nueva deuda
                 DeudaFormDialog deudaFormDialog = new DeudaFormDialog(this, deudaDao, null);
                 deudaFormDialog.setVisible(true);
                 cargarTabla("DEUDA");
+                break;
+            case "HABITACION":
+                // Implementar lógica para insertar una nueva habitación
+                HabitacionFormDialog habitacionFormDialog = new HabitacionFormDialog(this, habitacionDao, null);
+                habitacionFormDialog.setVisible(true);
+                cargarTabla("HABITACION");
                 break;
             case "HUESPED":
                 // Implementar lógica para insertar un nuevo huésped
@@ -276,13 +301,30 @@ public class FramePrincipal extends JFrame {
                 reservaFormDialog.setVisible(true);
                 cargarTabla("RESERVA");
                 break;
+            case "RESERVA_HAS_HABITACION":
+                // Implementar lógica para insertar una nueva reserva-habitación
+                ReservaHasHabitacionFormDialog reservaHasHabitacionFormDialog = new ReservaHasHabitacionFormDialog(this, reservaHasHabitacionDao, null);
+                reservaHasHabitacionFormDialog.setVisible(true);
+                cargarTabla("RESERVA_HAS_HABITACION");
+                break;
+            case "SERVICIO_ADICIONAL":
+                // Implementar lógica para insertar un nuevo servicio adicional
+                ServicioAdicionalFormDialog servicioAdicionalFormDialog = new ServicioAdicionalFormDialog(this, servicioAdicionalDao, null);
+                servicioAdicionalFormDialog.setVisible(true);
+                cargarTabla("SERVICIO_ADICIONAL");
+                break;
             case "SUCURSAL":
                 // Implementar lógica para insertar una nueva sucursal
                 SucursalFormDialog sucursalFormDialog = new SucursalFormDialog(this, sucursalDao, null);
                 sucursalFormDialog.setVisible(true);
                 cargarTabla("SUCURSAL");
                 break;
-
+            case "TIPO":
+                // Implementar lógica para insertar un nuevo tipo
+                TipoFormDialog tipoFormDialog = new TipoFormDialog(this, tipoDao, null);
+                tipoFormDialog.setVisible(true);
+                cargarTabla("TIPO");
+                break;
         }
     }
 
@@ -304,6 +346,34 @@ public class FramePrincipal extends JFrame {
                     JOptionPane.showMessageDialog(this, "Seleccione un paciente para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case "CHECKIN":
+                // Implementar lógica para actualizar un check-in
+                int indexCheckin = listTabla.getSelectedIndex();
+                if (indexCheckin != -1) {
+                    String checkinItem = listModel.get(indexCheckin);
+                    int idCheckin = getIdFromItem(checkinItem);
+                    Checkin checkin = checkinDao.get(idCheckin);
+                    CheckinFormDialog checkinFormDialog = new CheckinFormDialog(this, checkinDao, checkin);
+                    checkinFormDialog.setVisible(true);
+                    cargarTabla("CHECKIN");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un check-in para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "COMENTARIO":
+                // Implementar lógica para actualizar un comentario
+                int indexComentario = listTabla.getSelectedIndex();
+                if (indexComentario != -1) {
+                    String comentarioItem = listModel.get(indexComentario);
+                    int idComentario = getIdFromItem(comentarioItem);
+                    Comentario comentario = comentarioDao.get(idComentario);
+                    ComentarioFormDialog comentarioFormDialog = new ComentarioFormDialog(this, comentarioDao, comentario);
+                    comentarioFormDialog.setVisible(true);
+                    cargarTabla("COMENTARIO");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un comentario para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
             case "DEUDA":
                 int indexDeuda = listTabla.getSelectedIndex();
                 if (indexDeuda != -1) {
@@ -315,6 +385,20 @@ public class FramePrincipal extends JFrame {
                     cargarTabla("DEUDA");
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione una deuda para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "HABITACION":
+                // Implementar lógica para actualizar una habitación
+                int indexHabitacion = listTabla.getSelectedIndex();
+                if (indexHabitacion != -1) {
+                    String habitacionItem = listModel.get(indexHabitacion);
+                    int idHabitacion = getIdFromItem(habitacionItem);
+                    Habitacion habitacion = habitacionDao.get(idHabitacion);
+                    HabitacionFormDialog habitacionFormDialog = new HabitacionFormDialog(this, habitacionDao, habitacion);
+                    habitacionFormDialog.setVisible(true);
+                    cargarTabla("HABITACION");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una habitación para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "HUESPED":
@@ -357,6 +441,34 @@ public class FramePrincipal extends JFrame {
                     JOptionPane.showMessageDialog(this, "Seleccione una reserva para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case "RESERVA_HAS_HABITACION":
+                // Implementar lógica para actualizar una reserva-habitación
+                int indexReservaHabitacion = listTabla.getSelectedIndex();
+                if (indexReservaHabitacion != -1) {
+                    String reservaHabitacionItem = listModel.get(indexReservaHabitacion);
+                    int idReservaHabitacion = getIdFromItem(reservaHabitacionItem);
+                    ReservaHasHabitacion reservaHasHabitacion = reservaHasHabitacionDao.get(idReservaHabitacion);
+                    ReservaHasHabitacionFormDialog reservaHasHabitacionFormDialog = new ReservaHasHabitacionFormDialog(this, reservaHasHabitacionDao, reservaHasHabitacion);
+                    reservaHasHabitacionFormDialog.setVisible(true);
+                    cargarTabla("RESERVA_HAS_HABITACION");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una reserva-habitación para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "SERVICIO_ADICIONAL":
+                // Implementar lógica para actualizar un servicio adicional
+                int indexServicioAdicional = listTabla.getSelectedIndex();
+                if (indexServicioAdicional != -1) {
+                    String servicioAdicionalItem = listModel.get(indexServicioAdicional);
+                    int idServicioAdicional = getIdFromItem(servicioAdicionalItem);
+                    ServicioAdicional servicioAdicional = servicioAdicionalDao.get(idServicioAdicional);
+                    ServicioAdicionalFormDialog servicioAdicionalFormDialog = new ServicioAdicionalFormDialog(this, servicioAdicionalDao, servicioAdicional);
+                    servicioAdicionalFormDialog.setVisible(true);
+                    cargarTabla("SERVICIO_ADICIONAL");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un servicio adicional para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
             case "SUCURSAL":
                 // Implementar lógica para actualizar una sucursal
                 int indexSucursal = listTabla.getSelectedIndex();
@@ -369,6 +481,20 @@ public class FramePrincipal extends JFrame {
                     cargarTabla("SUCURSAL");
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione una sucursal para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "TIPO":
+                // Implementar lógica para actualizar un tipo
+                int indexTipo = listTabla.getSelectedIndex();
+                if (indexTipo != -1) {
+                    String tipoItem = listModel.get(indexTipo);
+                    int idTipo = getIdFromItem(tipoItem);
+                    Tipo tipo = tipoDao.get(idTipo);
+                    TipoFormDialog tipoFormDialog = new TipoFormDialog(this, tipoDao, tipo);
+                    tipoFormDialog.setVisible(true);
+                    cargarTabla("TIPO");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un tipo para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }
@@ -391,6 +517,34 @@ public class FramePrincipal extends JFrame {
                     JOptionPane.showMessageDialog(this, "Seleccione una cadena hotelera para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case "CHECKIN":
+                int indexCheckin = listTabla.getSelectedIndex();
+                if (indexCheckin != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el check-in?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String checkinItem = listModel.get(indexCheckin);
+                        int idCheckin = getIdFromItem(checkinItem);
+                        checkinDao.delete(idCheckin);
+                        cargarTabla("CHECKIN");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un check-in para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "COMENTARIO":
+                int indexComentario = listTabla.getSelectedIndex();
+                if (indexComentario != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el comentario?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String comentarioItem = listModel.get(indexComentario);
+                        int idComentario = getIdFromItem(comentarioItem);
+                        comentarioDao.delete(idComentario);
+                        cargarTabla("COMENTARIO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un comentario para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
             case "DEUDA":
                 int indexDeuda = listTabla.getSelectedIndex();
                 if (indexDeuda != -1) {
@@ -403,6 +557,20 @@ public class FramePrincipal extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione una deuda para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "HABITACION":
+                int indexHabitacion = listTabla.getSelectedIndex();
+                if (indexHabitacion != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la habitación?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String habitacionItem = listModel.get(indexHabitacion);
+                        int idHabitacion = getIdFromItem(habitacionItem);
+                        habitacionDao.delete(idHabitacion);
+                        cargarTabla("HABITACION");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una habitación para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "HUESPED":
@@ -447,6 +615,34 @@ public class FramePrincipal extends JFrame {
                     JOptionPane.showMessageDialog(this, "Seleccione una reserva para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case "RESERVA_HAS_HABITACION":
+                int indexReservaHabitacion = listTabla.getSelectedIndex();
+                if (indexReservaHabitacion != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la reserva-habitación?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String reservaHabitacionItem = listModel.get(indexReservaHabitacion);
+                        int idReservaHabitacion = getIdFromItem(reservaHabitacionItem);
+                        reservaHasHabitacionDao.delete(idReservaHabitacion);
+                        cargarTabla("RESERVA_HAS_HABITACION");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una reserva-habitación para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "SERVICIO_ADICIONAL":
+                int indexServicioAdicional = listTabla.getSelectedIndex();
+                if (indexServicioAdicional != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el servicio adicional?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String servicioAdicionalItem = listModel.get(indexServicioAdicional);
+                        int idServicioAdicional = getIdFromItem(servicioAdicionalItem);
+                        servicioAdicionalDao.delete(idServicioAdicional);
+                        cargarTabla("SERVICIO_ADICIONAL");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un servicio adicional para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
             case "SUCURSAL":
                 int indexSucursal = listTabla.getSelectedIndex();
                 if (indexSucursal != -1) {
@@ -459,6 +655,20 @@ public class FramePrincipal extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione una sucursal para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "TIPO":
+                int indexTipo = listTabla.getSelectedIndex();
+                if (indexTipo != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el tipo?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String tipoItem = listModel.get(indexTipo);
+                        int idTipo = getIdFromItem(tipoItem);
+                        tipoDao.delete(idTipo);
+                        cargarTabla("TIPO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un tipo para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }

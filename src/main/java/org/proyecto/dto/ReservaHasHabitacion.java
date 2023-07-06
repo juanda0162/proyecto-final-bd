@@ -6,10 +6,10 @@ public class ReservaHasHabitacion {
     private int idReserva_has_habitacion;
     private float precio;
 
-    public ReservaHasHabitacion(int idHabitaciones, int idReservas_has_Habitaciones, float precio) {
+    public ReservaHasHabitacion(int idReserva, int idHabitaciones, float precio) {
         this.idReserva = idReserva;
         this.idHabitacion = idHabitaciones;
-        this.idReserva_has_habitacion = idReservas_has_Habitaciones;
+        this.idReserva_has_habitacion = idReserva_has_habitacion;
         this.precio = precio;
     }
 

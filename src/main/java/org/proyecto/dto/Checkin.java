@@ -8,7 +8,7 @@ public class Checkin {
     private Date registroSalida;
     private int idReservas;
 
-    public Checkin(int idChekin, Date registroLlegada, Date registroSalida, int idReservas) {
+    public Checkin(Date registroLlegada, Date registroSalida, int idReservas) {
         this.idChekin = idChekin;
         this.registroLlegada = registroLlegada;
         this.registroSalida = registroSalida;
