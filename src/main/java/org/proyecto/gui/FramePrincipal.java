@@ -21,15 +21,19 @@ public class FramePrincipal extends JFrame {
 
     //instancias DAO
     private CadenaHoteleraDao cadenaHoteleraDao;
+//    private CheckinDao checkinDao;
     private ComentarioDao comentarioDao;
     private DeudaDao deudaDao;
     private HabitacionDao habitacionDao;
     private HuespedDao huespedDao;
     private MetodoDePagoDao metodoDePagoDao;
     private ReservaDao reservaDao;
+    private ReservaHasHabitacionDao reservaHasHabitacionDao;
+//    private ServicioAdicionalDao servicioAdicionalDao;
     private ServicioAdicionalHasHabitacionDao servicioAdicionalHasHabitacionDao;
     private SucursalDao sucursalDao;
     private TipoDao tipoDao;
+
 
 
     public FramePrincipal() {
@@ -37,15 +41,19 @@ public class FramePrincipal extends JFrame {
         //Inicializar DAO
 
         cadenaHoteleraDao = new CadenaHoteleraDaoImple();
+//        checkinDao = new CheckinDaoImpl();
         comentarioDao = new ComentarioDaoImple();
         deudaDao = new DeudaDaoImple();
         habitacionDao = new HabitacionDaoImple();
         huespedDao = new HuespedDaoImple();
         metodoDePagoDao = new MetodoDePagoDaoImple();
         reservaDao = new ReservaDaoImple();
+        reservaHasHabitacionDao = new ReservaHasHabitacionDaoImple();
+//        servicioAdicionalDao = new ServicioAdicionalDaoImpl();
         servicioAdicionalHasHabitacionDao = new ServicioAdicionalHasHabitacionDaoImple();
         sucursalDao = new SucursalDaoImple();
         tipoDao = new TipoDaoImple();
+
 
         setTitle("Gestión de Tablas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,13 +72,15 @@ public class FramePrincipal extends JFrame {
         // Configurar el JComboBox
         tablaComboBox = new JComboBox<>();
         tablaComboBox.addItem("CADENA_HOTELERA");
-        tablaComboBox.addItem("HUESPED");
-        tablaComboBox.addItem("SERVICIO_ADICIONAL");
         tablaComboBox.addItem("COMENTARIOS");
         tablaComboBox.addItem("DEUDA");
         tablaComboBox.addItem("HABITACION");
+        tablaComboBox.addItem("HUESPED");
         tablaComboBox.addItem("METODO_DE_PAGO");
         tablaComboBox.addItem("RESERVA");
+        tablaComboBox.addItem("RESERVA_HAS_HABITACION");
+        tablaComboBox.addItem("SERVICIO_ADICIONAL");
+        tablaComboBox.addItem("SERVICIO_ADICIONAL_HAS_HABITACION");
         tablaComboBox.addItem("SUCURSAL");
         tablaComboBox.addItem("TIPO");
 
@@ -130,6 +140,16 @@ public class FramePrincipal extends JFrame {
                 }
             }
         });
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    EliminarRegistro();
+                } catch (Exception ex) {
+                    System.out.println("Ocurrio un error al eliminar");
+                }
+            }
+        });
     }
 
     //metodos
@@ -142,21 +162,10 @@ public class FramePrincipal extends JFrame {
                     listModel.addElement(cadenaHotelera.getIdCadenaHotelera() + ". " + cadenaHotelera.getNombre());
                 }
                 break;
-            case "HUESPED":
-                ArrayList<Huesped> huespedes = huespedDao.getList();
-                for (Huesped huesped : huespedes) {
-                    listModel.addElement(huesped.getIdHuesped() + ". " + huesped.getNombre() + " " +
-                            huesped.getCi() + " - " + huesped.getTelefono());
-                }
+            case "CHECKIN":
+                // Agrega aquí el código para cargar la tabla CHECKIN
                 break;
-            case "SERVICIO_ADICIONAL":
-                ArrayList<ServicioAdicionalHasHabitacion> serviciosAdicionales = servicioAdicionalHasHabitacionDao.getList();
-                for (ServicioAdicionalHasHabitacion servicioAdicional : serviciosAdicionales) {
-                    listModel.addElement(servicioAdicional.getIdServicioAdicional() + ". " + servicioAdicional.getIdHabitacion()
-                            + " - " + servicioAdicional.getIdServicioAdicional_has_Habitacion());
-                }
-                break;
-            case "COMENTARIOS":
+            case "COMENTARIO":
                 ArrayList<Comentario> comentarios = comentarioDao.getList();
                 for (Comentario comentario : comentarios) {
                     listModel.addElement(comentario.getIdComentario() + ". " + comentario.getIdChekin() + " - " + comentario.getDescripcion() + " - " + comentario.getCalificacion());
@@ -175,6 +184,13 @@ public class FramePrincipal extends JFrame {
                             + " - " + habitacion.getEstado());
                 }
                 break;
+            case "HUESPED":
+                ArrayList<Huesped> huespedes = huespedDao.getList();
+                for (Huesped huesped : huespedes) {
+                    listModel.addElement(huesped.getIdHuesped() + ". " + huesped.getNombre() + " " +
+                            huesped.getCi() + " - " + huesped.getTelefono());
+                }
+                break;
             case "METODO_DE_PAGO":
                 ArrayList<MetodoDePago> metodosDePago = metodoDePagoDao.getList();
                 for (MetodoDePago metodoDePago : metodosDePago) {
@@ -188,6 +204,24 @@ public class FramePrincipal extends JFrame {
                             + " - " + reserva.getIdMetodoDePago() + " - " + reserva.getFechaEntrada() + " - " + reserva.getFechaSalida() + " - " + reserva.getEstado() + " - " + reserva.getPeticion());
                 }
                 break;
+            case "RESERVA_HAS_HABITACION":
+                ArrayList<ReservaHasHabitacion> reservaHasHabitaciones = reservaHasHabitacionDao.getList();
+                for (ReservaHasHabitacion reservaHasHabitacion : reservaHasHabitaciones) {
+                    listModel.addElement(reservaHasHabitacion.getIdReserva() + ". " + reservaHasHabitacion.getIdHabitacion() + ". " + reservaHasHabitacion.getIdReserva_has_habitacion() + " - " + reservaHasHabitacion.getPrecio());
+                }
+                break;
+
+            case "SERVICIO_ADICIONAL":
+                // Agrega aquí el código para cargar la tabla SERVICIO_ADICIONAL
+                break;
+            case "SERVICIO_ADICIONAL_HAS_HABITACION":
+                ArrayList<ServicioAdicionalHasHabitacion> servicioAdicionalHasHabitaciones = servicioAdicionalHasHabitacionDao.getList();
+                for (ServicioAdicionalHasHabitacion servicioAdicionalHasHabitacion : servicioAdicionalHasHabitaciones) {
+                    listModel.addElement(servicioAdicionalHasHabitacion.getIdServicioAdicional_has_Habitacion() + ". " +
+                            servicioAdicionalHasHabitacion.getIdServicioAdicional() + " - " + servicioAdicionalHasHabitacion.getIdHabitacion());
+                }
+                break;
+
             case "SUCURSAL":
                 ArrayList<Sucursal> sucursales = sucursalDao.getList();
                 for (Sucursal sucursal : sucursales) {
@@ -207,7 +241,7 @@ public class FramePrincipal extends JFrame {
         String entidadSeleccionada = (String) tablaComboBox.getSelectedItem();
         switch (entidadSeleccionada) {
             case "CADENA_HOTELERA":
-//                 Implementar lógica para insertar una nueva cadena hotelera
+                //Implementar lógica para insertar una nueva cadena hotelera
                 CadenaHoteleraFormDialog cadenaHoteleraFormDialog = new CadenaHoteleraFormDialog(this, cadenaHoteleraDao, null);
                 cadenaHoteleraFormDialog.setVisible(true);
                 cargarTabla("CADENA_HOTELERA");
@@ -217,6 +251,12 @@ public class FramePrincipal extends JFrame {
                 HuespedFormDialog huespedFormDialog = new HuespedFormDialog(this, huespedDao, null);
                 huespedFormDialog.setVisible(true);
                 cargarTabla("HUESPED");
+                break;
+            case "METODO_DE_PAGO":
+                // Implementar lógica para insertar un nuevo método de pago
+                MetodoDePagoFormDialog metodoDePagoFormDialog = new MetodoDePagoFormDialog(this, metodoDePagoDao, null);
+                metodoDePagoFormDialog.setVisible(true);
+                cargarTabla("METODO_DE_PAGO");
                 break;
         }
     }
@@ -237,6 +277,81 @@ public class FramePrincipal extends JFrame {
                     cargarTabla("Paciente");
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione un paciente para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "HUESPED":
+                int indexHuesped = listTabla.getSelectedIndex();
+                if (indexHuesped != -1) {
+                    String huespedItem = listModel.get(indexHuesped);
+                    int idHuesped = getIdFromItem(huespedItem);
+                    Huesped huesped = huespedDao.get(idHuesped);
+                    HuespedFormDialog huespedFormDialog = new HuespedFormDialog(this, huespedDao, huesped);
+                    huespedFormDialog.setVisible(true);
+                    cargarTabla("HUESPED");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un huésped para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "METODO_DE_PAGO":
+                int indexMetodoDePago = listTabla.getSelectedIndex();
+                if (indexMetodoDePago != -1) {
+                    String metodoDePagoItem = listModel.get(indexMetodoDePago);
+                    int idMetodoDePago = getIdFromItem(metodoDePagoItem);
+                    MetodoDePago metodoDePago = metodoDePagoDao.get(idMetodoDePago);
+                    MetodoDePagoFormDialog metodoDePagoFormDialog = new MetodoDePagoFormDialog(this, metodoDePagoDao, metodoDePago);
+                    metodoDePagoFormDialog.setVisible(true);
+                    cargarTabla("METODO_DE_PAGO");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un método de pago para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+
+        }
+    }
+    //Eliminar
+    private void EliminarRegistro() throws Exception {
+        String entidadSeleccionada = (String) tablaComboBox.getSelectedItem();
+        switch (entidadSeleccionada){
+            case "CADENA_HOTELERA":
+                int indexCadenaHotelera = listTabla.getSelectedIndex();
+                if (indexCadenaHotelera != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la cadena hotelera?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String cadenaHoteleraItem = listModel.get(indexCadenaHotelera);
+                        int idCadenaHotelera = getIdFromItem(cadenaHoteleraItem);
+                        cadenaHoteleraDao.delete(idCadenaHotelera);
+                        cargarTabla("CADENA_HOTELERA");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una cadena hotelera para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "HUESPED":
+                int indexHuesped = listTabla.getSelectedIndex();
+                if (indexHuesped != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el huésped?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String huespedItem = listModel.get(indexHuesped);
+                        int idHuesped = getIdFromItem(huespedItem);
+                        huespedDao.delete(idHuesped);
+                        cargarTabla("HUESPED");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un huésped para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "METODO_DE_PAGO":
+                int indexMetodoDePago = listTabla.getSelectedIndex();
+                if (indexMetodoDePago != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar el método de pago?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String metodoDePagoItem = listModel.get(indexMetodoDePago);
+                        int idMetodoDePago = getIdFromItem(metodoDePagoItem);
+                        metodoDePagoDao.delete(idMetodoDePago);
+                        cargarTabla("METODO_DE_PAGO");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un método de pago para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }
