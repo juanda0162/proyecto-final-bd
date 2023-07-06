@@ -95,6 +95,7 @@ public class CadenaHoteleraFormDialog extends JFrame {
             // Actualizar el paciente existente
             NuevaCadenaHotelera.setIdCadenaHotelera(cadenaHotelera.getIdCadenaHotelera());
             cadenaHoteleraDao.update(NuevaCadenaHotelera);
+            JOptionPane.showMessageDialog(this, "Cadena hotelera actualizada exitosamente");
         } else {
             // Insertar un nuevo paciente
             cadenaHoteleraDao.insert(NuevaCadenaHotelera);

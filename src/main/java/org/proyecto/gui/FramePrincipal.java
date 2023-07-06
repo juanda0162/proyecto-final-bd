@@ -200,8 +200,14 @@ public class FramePrincipal extends JFrame {
             case "RESERVA":
                 ArrayList<Reserva> reservas = reservaDao.getList();
                 for (Reserva reserva : reservas) {
-                    listModel.addElement(reserva.getIdReserva() + ". " + reserva.getIdHuesped() + " - " + reserva.getCantidadPersonas()
-                            + " - " + reserva.getIdMetodoDePago() + " - " + reserva.getFechaEntrada() + " - " + reserva.getFechaSalida() + " - " + reserva.getEstado() + " - " + reserva.getPeticion());
+                    String reservaInfo = reserva.getIdReserva() + ". " +
+                            "| Huesped: " + reserva.getIdHuesped() + " " +
+                            "| Cantidad de Personas: " + reserva.getCantidadPersonas() + " |" + reserva.getIdMetodoDePago() + " " +
+                            "| Fecha de Entrada: " + reserva.getFechaEntrada() + " " +
+                            "| Fecha de Salida: " + reserva.getFechaSalida() + " " +
+                            "| Estado: " + reserva.getEstado() + " " +
+                            "| Petición: " + reserva.getPeticion();
+                    listModel.addElement(reservaInfo);
                 }
                 break;
             case "RESERVA_HAS_HABITACION":
@@ -246,6 +252,12 @@ public class FramePrincipal extends JFrame {
                 cadenaHoteleraFormDialog.setVisible(true);
                 cargarTabla("CADENA_HOTELERA");
                 break;
+            case "DEUDA":
+                // Implementar lógica para insertar una nueva deuda
+                DeudaFormDialog deudaFormDialog = new DeudaFormDialog(this, deudaDao, null);
+                deudaFormDialog.setVisible(true);
+                cargarTabla("DEUDA");
+                break;
             case "HUESPED":
                 // Implementar lógica para insertar un nuevo huésped
                 HuespedFormDialog huespedFormDialog = new HuespedFormDialog(this, huespedDao, null);
@@ -258,6 +270,19 @@ public class FramePrincipal extends JFrame {
                 metodoDePagoFormDialog.setVisible(true);
                 cargarTabla("METODO_DE_PAGO");
                 break;
+            case "RESERVA":
+                // Implementar lógica para insertar una nueva reserva
+                ReservaFormDialog reservaFormDialog = new ReservaFormDialog(this, reservaDao, null);
+                reservaFormDialog.setVisible(true);
+                cargarTabla("RESERVA");
+                break;
+            case "SUCURSAL":
+                // Implementar lógica para insertar una nueva sucursal
+                SucursalFormDialog sucursalFormDialog = new SucursalFormDialog(this, sucursalDao, null);
+                sucursalFormDialog.setVisible(true);
+                cargarTabla("SUCURSAL");
+                break;
+
         }
     }
 
@@ -277,6 +302,19 @@ public class FramePrincipal extends JFrame {
                     cargarTabla("Paciente");
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione un paciente para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "DEUDA":
+                int indexDeuda = listTabla.getSelectedIndex();
+                if (indexDeuda != -1) {
+                    String deudaItem = listModel.get(indexDeuda);
+                    int idDeuda = getIdFromItem(deudaItem);
+                    Deuda deuda = deudaDao.get(idDeuda);
+                    DeudaFormDialog deudaFormDialog = new DeudaFormDialog(this, deudaDao, deuda);
+                    deudaFormDialog.setVisible(true);
+                    cargarTabla("DEUDA");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una deuda para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "HUESPED":
@@ -305,7 +343,34 @@ public class FramePrincipal extends JFrame {
                     JOptionPane.showMessageDialog(this, "Seleccione un método de pago para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
-
+            case "RESERVA":
+                // Implementar lógica para actualizar una reserva
+                int indexReserva = listTabla.getSelectedIndex();
+                if (indexReserva != -1) {
+                    String reservaItem = listModel.get(indexReserva);
+                    int idReserva = getIdFromItem(reservaItem);
+                    Reserva reserva = reservaDao.get(idReserva);
+                    ReservaFormDialog reservaFormDialog = new ReservaFormDialog(this, reservaDao, reserva);
+                    reservaFormDialog.setVisible(true);
+                    cargarTabla("RESERVA");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una reserva para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "SUCURSAL":
+                // Implementar lógica para actualizar una sucursal
+                int indexSucursal = listTabla.getSelectedIndex();
+                if (indexSucursal != -1) {
+                    String sucursalItem = listModel.get(indexSucursal);
+                    int idSucursal = getIdFromItem(sucursalItem);
+                    Sucursal sucursal = sucursalDao.get(idSucursal);
+                    SucursalFormDialog sucursalFormDialog = new SucursalFormDialog(this, sucursalDao, sucursal);
+                    sucursalFormDialog.setVisible(true);
+                    cargarTabla("SUCURSAL");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una sucursal para actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
         }
     }
     //Eliminar
@@ -324,6 +389,20 @@ public class FramePrincipal extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione una cadena hotelera para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "DEUDA":
+                int indexDeuda = listTabla.getSelectedIndex();
+                if (indexDeuda != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la deuda?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String deudaItem = listModel.get(indexDeuda);
+                        int idDeuda = getIdFromItem(deudaItem);
+                        deudaDao.delete(idDeuda);
+                        cargarTabla("DEUDA");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una deuda para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "HUESPED":
@@ -352,6 +431,34 @@ public class FramePrincipal extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Seleccione un método de pago para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "RESERVA":
+                int indexReserva = listTabla.getSelectedIndex();
+                if (indexReserva != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la reserva?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String reservaItem = listModel.get(indexReserva);
+                        int idReserva = getIdFromItem(reservaItem);
+                        reservaDao.delete(idReserva);
+                        cargarTabla("RESERVA");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una reserva para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "SUCURSAL":
+                int indexSucursal = listTabla.getSelectedIndex();
+                if (indexSucursal != -1) {
+                    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la sucursal?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        String sucursalItem = listModel.get(indexSucursal);
+                        int idSucursal = getIdFromItem(sucursalItem);
+                        sucursalDao.delete(idSucursal);
+                        cargarTabla("SUCURSAL");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione una sucursal para eliminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }

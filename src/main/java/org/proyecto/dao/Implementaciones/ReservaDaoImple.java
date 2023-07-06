@@ -139,7 +139,7 @@ public class ReservaDaoImple extends ReservaDao {
                 reserva.setFechaSalida(rs.getDate("fechaSalida"));
                 reserva.setPeticion(rs.getString("peticion"));
                 reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
-                reserva.setIdHuesped(rs.getInt("huespedCi"));
+                reserva.setIdHuesped(rs.getInt("idHuesped"));
                 reserva.setIdMetodoDePago(rs.getInt("idMetodoDePago"));
                 rs.close();
                 stmt.close();
@@ -177,7 +177,7 @@ public class ReservaDaoImple extends ReservaDao {
                 reserva.setFechaSalida(rs.getDate("fechaSalida"));
                 reserva.setPeticion(rs.getString("peticion"));
                 reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
-                reserva.setIdHuesped(rs.getInt("huespedCi"));
+                reserva.setIdHuesped(rs.getInt("idHuesped"));
                 reserva.setIdMetodoDePago(rs.getInt("idMetodoDePago"));
                 reservas.add(reserva);
             }
@@ -212,7 +212,7 @@ public class ReservaDaoImple extends ReservaDao {
                 reserva.setFechaSalida(rs.getDate("fechaSalida"));
                 reserva.setPeticion(rs.getString("peticion"));
                 reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
-                reserva.setIdHuesped(rs.getInt("huespedCi"));
+                reserva.setIdHuesped(rs.getInt("idHuesped"));
                 reserva.setIdMetodoDePago(rs.getInt("idMetodoDePago"));
                 reservas.add(reserva);
             }
@@ -247,7 +247,7 @@ public class ReservaDaoImple extends ReservaDao {
                 reserva.setFechaSalida(rs.getDate("fechaSalida"));
                 reserva.setPeticion(rs.getString("peticion"));
                 reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
-                reserva.setIdHuesped(rs.getInt("huespedCi"));
+                reserva.setIdHuesped(rs.getInt("idHuesped"));
                 reserva.setIdMetodoDePago(rs.getInt("idMetodoDePago"));
                 reservas.add(reserva);
             }

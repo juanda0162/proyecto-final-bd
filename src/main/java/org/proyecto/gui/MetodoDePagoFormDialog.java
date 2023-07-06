@@ -88,18 +88,20 @@ public class MetodoDePagoFormDialog extends JFrame {
         // Crear un objeto MetodoDePago con los datos ingresados
         MetodoDePago nuevoMetodoDePago = new MetodoDePago(tipo, descripcion);
 
-        // Guardar el método de pago en la base de datos
+        // Actualizar el método de pago en la base de datos
         if (metodoDePago != null) {
             // Actualizar el método de pago existente
             nuevoMetodoDePago.setIdMetodoDePago(metodoDePago.getIdMetodoDePago());
             metodoDePagoDao.update(nuevoMetodoDePago);
+            JOptionPane.showMessageDialog(this, "Método de pago actualizado exitosamente");
+
         } else {
             // Insertar un nuevo método de pago
             metodoDePagoDao.insert(nuevoMetodoDePago);
             JOptionPane.showMessageDialog(this, "Método de pago actualizado exitosamente");
         }
 
-        // Cerrar la ventana de consulta de método de pago
+        // Cerrar la ventana de actualización de método de pago
         dispose();
     }
 }

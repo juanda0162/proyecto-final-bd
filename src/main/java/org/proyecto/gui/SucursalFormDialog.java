@@ -1,29 +1,31 @@
 package org.proyecto.gui;
 
-import org.proyecto.dao.HuespedDao;
-import org.proyecto.dto.Huesped;
+import org.proyecto.dao.SucursalDao;
+import org.proyecto.dto.Sucursal;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HuespedFormDialog extends JFrame {
-    private JTextField ciTextField;
+public class SucursalFormDialog extends JFrame {
     private JTextField nombreTextField;
+    private JTextField direccionTextField;
+    private JTextField clasificacionTextField;
     private JTextField telefonoTextField;
+    private JTextField idCadenaHoteleraTextField;
     private JButton guardarButton;
 
-    private HuespedDao huespedDao;
-    private Huesped huesped;
+    private SucursalDao sucursalDao;
+    private Sucursal sucursal;
 
-    public HuespedFormDialog(JFrame parent, HuespedDao huespedDao, Huesped huesped) {
+    public SucursalFormDialog(JFrame parent, SucursalDao sucursalDao, Sucursal sucursal) {
         super();
-        this.huesped = huesped;
-        this.huespedDao = huespedDao;
+        this.sucursalDao = sucursalDao;
+        this.sucursal = sucursal;
 
         // Configurar la ventana emergente
-        setTitle("Consulta de Huésped");
+        setTitle("Consulta de Sucursal");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
@@ -34,9 +36,11 @@ public class HuespedFormDialog extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Crear componentes de la interfaz
-        ciTextField = new JTextField(10);
         nombreTextField = new JTextField(10);
+        direccionTextField = new JTextField(10);
+        clasificacionTextField = new JTextField(10);
         telefonoTextField = new JTextField(10);
+        idCadenaHoteleraTextField = new JTextField(10);
         guardarButton = new JButton("Guardar");
 
         // Configurar el ActionListener para el botón "Guardar"
@@ -44,7 +48,7 @@ public class HuespedFormDialog extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    guardarHuesped();
+                    guardarSucursal();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -59,21 +63,33 @@ public class HuespedFormDialog extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         // Agregar componentes al panel
-        panel.add(new JLabel("CI del Huésped:"), gbc);
-        gbc.gridx++;
-        panel.add(ciTextField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy++;
         panel.add(new JLabel("Nombre:"), gbc);
         gbc.gridx++;
         panel.add(nombreTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
+        panel.add(new JLabel("Dirección:"), gbc);
+        gbc.gridx++;
+        panel.add(direccionTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("Clasificación:"), gbc);
+        gbc.gridx++;
+        panel.add(clasificacionTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
         panel.add(new JLabel("Teléfono:"), gbc);
         gbc.gridx++;
         panel.add(telefonoTextField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(new JLabel("ID Cadena Hotelera:"), gbc);
+        gbc.gridx++;
+        panel.add(idCadenaHoteleraTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -88,32 +104,29 @@ public class HuespedFormDialog extends JFrame {
         setVisible(true);
     }
 
-
-
-    private void guardarHuesped() throws Exception {
+    private void guardarSucursal() throws Exception {
         // Obtener los datos ingresados por el usuario
-        int ci = Integer.parseInt(ciTextField.getText());
         String nombre = nombreTextField.getText();
+        String direccion = direccionTextField.getText();
+        String clasificacion = clasificacionTextField.getText();
         int telefono = Integer.parseInt(telefonoTextField.getText());
+        int idCadenaHotelera = Integer.parseInt(idCadenaHoteleraTextField.getText());
 
-        // Crear un objeto CadenaHotelera con los datos ingresados
-        Huesped nuevoHuesped = new Huesped(ci, nombre, telefono);
+        // Crear un objeto Sucursal con los datos ingresados
+        Sucursal nuevaSucursal = new Sucursal(nombre, direccion, clasificacion, telefono, idCadenaHotelera);
 
-        // Actualizar la cadena hotelera en la base de datos
-        if (huesped != null) {
-            // Actualizar el huesped existente
-            System.out.println("ESTA ENTRANDO");
-            nuevoHuesped.setIdHuesped(huesped.getIdHuesped());
-            huespedDao.update(nuevoHuesped);
-            JOptionPane.showMessageDialog(this, "Huésped actualizado exitosamente");
+        // Guardar la sucursal en la base de datos
+        if (sucursal != null) {
+            // Actualizar la sucursal existente
+            nuevaSucursal.setIdSucursal(sucursal.getIdSucursal());
+            sucursalDao.update(nuevaSucursal);
         } else {
-            // Insertar un nuevo huesped
-            huespedDao.insert(nuevoHuesped);
-            JOptionPane.showMessageDialog(this, "Huésped actualizado exitosamente");
+            // Insertar una nueva sucursal
+            sucursalDao.insert(nuevaSucursal);
+            JOptionPane.showMessageDialog(this, "Sucursal actualizada exitosamente");
         }
 
-        // Cerrar la ventana de actualización de cadena hotelera
+        // Cerrar la ventana de consulta de sucursal
         dispose();
     }
-
 }
